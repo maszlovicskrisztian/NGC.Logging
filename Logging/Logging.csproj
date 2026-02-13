@@ -12,9 +12,8 @@
 	<Description>Logging to file or database</Description>
 	<PackageTags>logging;unity;dotnet</PackageTags>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-	<RepositoryUrl>https://github.com/yourusername/yourrepo</RepositoryUrl>
+	<RepositoryUrl>https://github.com/maszlovicskrisztian/NGC.Logging</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
-	<PackageProjectUrl>https://github.com/yourusername/yourrepo</PackageProjectUrl>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
