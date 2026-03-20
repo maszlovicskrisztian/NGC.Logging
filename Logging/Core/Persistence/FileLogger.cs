@@ -78,7 +78,7 @@
             LogHandler.ValidateLog(log);
             // Get stack trace info
             var stackTrace = new System.Diagnostics.StackTrace();
-            var callerMethod = stackTrace.GetFrame(2)?.GetMethod();
+            var callerMethod = stackTrace.GetFrame(3)?.GetMethod();
             var callerClass = callerMethod?.DeclaringType?.FullName;
 
             var logEntry = $"{log.CreatedAt:yyyy-MM-dd HH:mm:ss}";

@@ -11,7 +11,7 @@ namespace NGC.Logging.DataAccess.Composition
     /// </summary>
     internal static class DatabaseInitializer
     {
-        private const string DefaultConnectionStringName = "DefaultConnection";
+        private const string DefaultConnectionStringName = "ConnectionStrings:DefaultConnection";
         private const string ErrorKeyword = "ERROR";
         private const string WarningKeyword = "WARNING";
         private const string InfoKeyword = "INFO";
