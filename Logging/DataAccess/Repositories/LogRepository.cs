@@ -16,7 +16,7 @@ namespace NGC.Logging.DataAccess.Repositories
         {
             if (log.CreatedAt == default)
             {
-                log.CreatedAt = DateTime.UtcNow;
+                log.CreatedAt = DateTime.Now;
             }
             _context.Logs.Add(log);
             _context.SaveChanges();

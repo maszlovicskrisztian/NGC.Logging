@@ -15,7 +15,8 @@
                 SessionId = logDto.SessionId,
                 Message = logDto.Message,
                 CreatedAt = logDto.CreatedAt,
-                LogLevelId = logLevelId
+                LogLevelId = logLevelId,
+                LogBy = logDto.LogBy,
             };
         }
     }

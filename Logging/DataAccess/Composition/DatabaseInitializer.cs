@@ -23,7 +23,7 @@ namespace NGC.Logging.DataAccess.Composition
             var connectionString = configuration.GetSection(DefaultConnectionStringName).Value;
             var optionsBuilder = new DbContextOptionsBuilder<LoggingDbContext>();
 
-            optionsBuilder.UseSqlServer(connectionString, sqlOptions =>
+            optionsBuilder.UseSqlite(connectionString, sqlOptions =>
             {
                 sqlOptions.MigrationsAssembly(typeof(LoggingDbContext).Assembly.FullName);
             });

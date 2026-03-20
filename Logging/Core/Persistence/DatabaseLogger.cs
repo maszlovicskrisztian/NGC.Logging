@@ -15,14 +15,14 @@
             this.logLevelRepository = logLevelRepository ?? throw new ArgumentNullException(nameof(logLevelRepository));
         }
 
-        public void LogError(string module, int? sessionId, string message)
+        public void LogError(string module, int? sessionId, string message, string logBy)
         {
             try
             {
                 if (!CheckLogLevelSetting(LogLevels.Error.ToString()))
                     return;
 
-                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Error);
+                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Error, logBy);
                 SaveLog(log);
             }
             catch (Exception)
@@ -31,14 +31,14 @@
             }
         }
 
-        public void LogInfo(string module, int? sessionId, string message)
+        public void LogInfo(string module, int? sessionId, string message, string logBy)
         {
             try
             {
                 if (!CheckLogLevelSetting(LogLevels.Info.ToString()))
                     return;
 
-                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Info);
+                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Info, logBy);
                 SaveLog(log);
             }
             catch (Exception)
@@ -47,14 +47,14 @@
             }
         }
 
-        public void LogWarning(string module, int? sessionId, string message)
+        public void LogWarning(string module, int? sessionId, string message, string logBy)
         {
             try
             {
                 if (!CheckLogLevelSetting(LogLevels.Warning.ToString()))
                     return;
 
-                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Warning);
+                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Warning, logBy);
                 SaveLog(log);
             }
             catch (Exception)
@@ -63,7 +63,7 @@
             }
         }
 
-        public void Log(string module, int? sessionId, string message, string logLevelKeyword)
+        public void Log(string module, int? sessionId, string message, string logLevelKeyword, string logBy)
         {
             try
             {
@@ -71,7 +71,7 @@
                     return;
 
                 var logLevelId = logLevelRepository.GetByKeyword(logLevelKeyword).Id;
-                var log = LogHandler.CreateLogDto(module, sessionId, message);
+                var log = LogHandler.CreateLogDto(module, sessionId, message, logBy: logBy);
                 log.LogLevelKeyword = logLevelKeyword;
 
                 LogHandler.ValidateLog(log);

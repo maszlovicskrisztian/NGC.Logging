@@ -1,22 +1,17 @@
 ﻿namespace NGC.Logging.Core
 {
-    using Microsoft.Extensions.Configuration;
     using NGC.Logging.Objects;
 
     internal class FileLogger : ILogger
     {
-        public FileLogger(IConfiguration configuration)
-        {
-        }
-
-        public void LogError(string module, int? sessionId, string message)
+        public void LogError(string module, int? sessionId, string message, string logBy)
         {
             try
             {
                 if (!CheckLogLevelSetting(LogLevels.Error.ToString()))
                     return;
 
-                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Error);
+                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Error, logBy);
                 SaveLog(log);
             }
             catch (Exception)
@@ -25,14 +20,14 @@
             }
         }
 
-        public void LogInfo(string module, int? sessionId, string message)
+        public void LogInfo(string module, int? sessionId, string message, string logBy)
         {
             try
             {
                 if (!CheckLogLevelSetting(LogLevels.Info.ToString()))
                     return;
 
-                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Info);
+                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Info, logBy);
                 SaveLog(log);
             }
             catch (Exception)
@@ -41,14 +36,14 @@
             }
         }
 
-        public void LogWarning(string module, int? sessionId, string message)
+        public void LogWarning(string module, int? sessionId, string message, string logBy)
         {
             try
             {
                 if (!CheckLogLevelSetting(LogLevels.Warning.ToString()))
                     return;
 
-                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Warning);
+                var log = LogHandler.CreateLogDto(module, sessionId, message, LogLevels.Warning, logBy);
                 SaveLog(log);
             }
             catch (Exception)
@@ -57,14 +52,14 @@
             }
         }
 
-        public void Log(string module, int? sessionId, string message, string logLevelKeyword)
+        public void Log(string module, int? sessionId, string message, string logLevelKeyword, string logBy)
         {
             try
             {
                 if (!CheckLogLevelSetting(logLevelKeyword))
                     return;
 
-                var log = LogHandler.CreateLogDto(module, sessionId, message);
+                var log = LogHandler.CreateLogDto(module, sessionId, message, logBy: logBy);
                 log.LogLevelKeyword = logLevelKeyword;
 
                 SaveLog(log);
@@ -90,6 +85,7 @@
             logEntry += log.LogLevel.HasValue ? $"|{log.LogLevel.Value.ToString()}" : $"|{log.LogLevelKeyword}";
             logEntry += string.IsNullOrEmpty(log.Module) ? "|Module: N/A" : $"|Module: {log.Module}";
             logEntry += $"|SessionId: {log.SessionId}";
+            logEntry += string.IsNullOrEmpty(log.LogBy) ? "|LogBy: N/A" : $"|LogBy: {log.LogBy}";
             logEntry += $"|{callerClass}.{callerMethod?.Name}";
             logEntry += $" - {log.Message}{Environment.NewLine}";
 

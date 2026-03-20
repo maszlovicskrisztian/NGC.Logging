@@ -8,6 +8,7 @@
         public string Message { get; set; }
         public int LogLevelId { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string? LogBy { get; set; }
         
         // Navigation property
         public LogLevel? LogLevel { get; set; }

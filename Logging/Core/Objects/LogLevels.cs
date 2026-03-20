@@ -1,6 +1,6 @@
 ﻿namespace NGC.Logging.Objects
 {
-    internal enum LogLevels
+    public enum LogLevels
     {
         Info = 1,
         Warning = 2,

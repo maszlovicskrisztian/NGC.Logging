@@ -1,4 +1,4 @@
-﻿namespace NGC.Logging.Core
+﻿namespace NGC.Logging.Objects
 {
     internal static class LogSettings
     {

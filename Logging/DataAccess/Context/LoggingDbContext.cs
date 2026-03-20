@@ -41,6 +41,10 @@ namespace NGC.Logging.DataAccess.Context
                 entity.Property(e => e.CreatedAt)
                     .IsRequired();
 
+                entity.Property(e => e.LogBy)
+                    .HasMaxLength(100)
+                    .IsRequired(false);
+
                 // Configure relationship with LogLevel
                 entity.HasOne(e => e.LogLevel)
                     .WithMany()

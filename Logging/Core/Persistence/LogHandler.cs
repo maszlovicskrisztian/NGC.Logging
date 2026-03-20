@@ -4,7 +4,7 @@
 
     internal static class LogHandler
     {
-        internal static LogDto CreateLogDto(string module, int? sessionId, string message, LogLevels? logLevel = null)
+        internal static LogDto CreateLogDto(string module, int? sessionId, string message, LogLevels? logLevel = null, string logBy = null)
         {
             var log = new LogDto
             {
@@ -12,7 +12,8 @@
                 SessionId = sessionId ?? 0,
                 Message = message,
                 LogLevel = logLevel.HasValue ? logLevel.Value : null,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                LogBy = logBy
             };
 
             return log;

@@ -1,8 +1,8 @@
 ﻿namespace NGC.Logging
 {
-    using Logging.Core;
     using Microsoft.Extensions.Configuration;
     using NGC.Logging.Composition;
+    using NGC.Logging.Objects;
     using Unity;
 
     public static class LoggerSetup
@@ -17,13 +17,19 @@
             var config = container.Resolve<IConfiguration>();
             FillSettings(config);
 
-            var target = Objects.LogTarget.File;
-            if (!string.IsNullOrEmpty(LogSettings.DbLogMinLevel))
-            {
+            var hasDb = !string.IsNullOrEmpty(LogSettings.DbLogMinLevel);
+            var hasFile = !string.IsNullOrEmpty(LogSettings.FileLogMinLevel);
+
+            if (hasDb)
                 DataAccess.Composition.Setting.ApplyOn(container);
-                target = Objects.LogTarget.Database;
-            }
-            
+
+            var target = (hasDb, hasFile) switch
+            {
+                (true, true) => LogTarget.Both,
+                (true, false) => LogTarget.Database,
+                _ => LogTarget.File
+            };
+
             Setting.ApplyOn(container, target);
         }
 
@@ -37,13 +43,5 @@
             LogSettings.FileLogMinLevel = fileMinLogLevel ?? string.Empty;
             LogSettings.DbLogMinLevel = DbMinLogLevel ?? string.Empty;
         }
-
-        //private static IConfiguration BuildConfiguration()
-        //{
-        //    return new ConfigurationBuilder()
-        //        .SetBasePath(Environment.CurrentDirectory)
-        //        .AddJsonFile("logsettings.json", optional: false, reloadOnChange: true)
-        //        .Build();
-        //}
     }
 }

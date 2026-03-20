@@ -1,19 +1,31 @@
 ﻿namespace NGC.Logging.Composition
 {
-    using Logging.Core;
+    using NGC.Logging.Core;
     using NGC.Logging.Objects;
     using Unity;
-    using Unity.Lifetime;
 
     internal static class Setting
     {
         internal static IUnityContainer ApplyOn(this IUnityContainer container, LogTarget target)
         {
-            if (target == LogTarget.Database)
-                container.RegisterType<ILogger, DatabaseLogger>();
-            else if (target == LogTarget.File)
-                container.RegisterType<ILogger, FileLogger>();
-            
+            switch (target)
+            {
+                case LogTarget.Database:
+                    container.RegisterType<ILogger, DatabaseLogger>();
+                    break;
+
+                case LogTarget.File:
+                    container.RegisterType<ILogger, FileLogger>();
+                    break;
+
+                case LogTarget.Both:
+                    container.RegisterType<ILogger, DatabaseLogger>("database");
+                    container.RegisterType<ILogger, FileLogger>("file");
+                    container.RegisterFactory<ILogger>(
+                        c => new CompositeLogger(c.ResolveAll<ILogger>()));
+                    break;
+            }
+
             return container;
         }
     }

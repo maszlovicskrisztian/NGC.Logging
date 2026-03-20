@@ -3,6 +3,7 @@
     internal enum LogTarget
     {
         Database = 1,
-        File = 2
+        File = 2,
+        Both = 3
     }
 }

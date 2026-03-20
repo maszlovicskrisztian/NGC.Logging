@@ -1,12 +1,13 @@
 ﻿namespace NGC.Logging.Objects
 {
-    internal class LogDto
+    public class LogDto
     {
-        internal string Module { get; set; }
-        internal int SessionId { get; set; }
-        internal string Message { get; set; }
-        internal LogLevels? LogLevel { get; set; }
-        internal string LogLevelKeyword { get; set; }
-        internal DateTime CreatedAt { get; set; }
+        public string Module { get; set; }
+        public int SessionId { get; set; }
+        public string Message { get; set; }
+        public LogLevels? LogLevel { get; set; }
+        public string LogLevelKeyword { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public string LogBy { get; set; }
     }
 }
