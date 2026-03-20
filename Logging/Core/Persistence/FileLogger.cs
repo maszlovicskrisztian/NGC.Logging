@@ -78,15 +78,15 @@
             LogHandler.ValidateLog(log);
             // Get stack trace info
             var stackTrace = new System.Diagnostics.StackTrace();
-            var callerMethod = stackTrace.GetFrame(3)?.GetMethod();
-            var callerClass = callerMethod?.DeclaringType?.FullName;
+            var cmt = stackTrace.GetFrames()?.Where(f => f.GetMethod()?.Module?.Name != typeof(LoggerSetup).Assembly.ManifestModule.Name)?.ToList()?[1]?.GetMethod();
+            var callerClass = cmt?.DeclaringType?.Name;
 
             var logEntry = $"{log.CreatedAt:yyyy-MM-dd HH:mm:ss}";
             logEntry += log.LogLevel.HasValue ? $"|{log.LogLevel.Value.ToString()}" : $"|{log.LogLevelKeyword}";
             logEntry += string.IsNullOrEmpty(log.Module) ? "|Module: N/A" : $"|Module: {log.Module}";
             logEntry += $"|SessionId: {log.SessionId}";
             logEntry += string.IsNullOrEmpty(log.LogBy) ? "|LogBy: N/A" : $"|LogBy: {log.LogBy}";
-            logEntry += $"|{callerClass}.{callerMethod?.Name}";
+            logEntry += $"|{callerClass}.{cmt?.Name}";
             logEntry += $" - {log.Message}{Environment.NewLine}";
 
 
